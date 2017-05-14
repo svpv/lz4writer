@@ -117,9 +117,9 @@ struct lz4writer *lz4writer_fdopen(int fd, bool writeContentSize, bool writeChec
 		   free(zw), NULL;
     }
 
-    size_t ret = LZ4F_createCompressionContext(&zw->zctx, LZ4F_VERSION);
-    if (LZ4F_isError(ret))
-	return ERRLZ4("LZ4F_createCompressionContext", ret),
+    size_t zret = LZ4F_createCompressionContext(&zw->zctx, LZ4F_VERSION);
+    if (LZ4F_isError(zret))
+	return ERRLZ4("LZ4F_createCompressionContext", zret),
 	       free(zw), NULL;
 
     size_t zsize = LZ4F_compressBegin(zw->zctx, zw->frameHeader, sizeof zw->frameHeader, &pref);
