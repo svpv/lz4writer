@@ -9,4 +9,4 @@ main.o: main.c lz4writer.h
 lz4writer.o: lz4writer.c lz4writer.h lz4fix.h
 	$(CC) $(RPM_OPT_FLAGS) -c $<
 clean:
-	rm -f lz4writer.o liblz4writer.a main.o lz4writer.o
+	rm -f lz4writer.o liblz4writer.a main.o lz4writer
