@@ -91,10 +91,11 @@ struct lz4writer {
 // Big inputs are processed in 256K chunks.
 #define CHUNK (256 << 10)
 
-struct lz4writer *lz4writer_fdopen(int fd, bool writeContentSize, bool writeChecksum, const char *err[2])
+struct lz4writer *lz4writer_fdopen(int fd, int compressionLevel, bool writeContentSize, bool writeChecksum, const char *err[2])
 {
     LZ4F_preferences_t pref;
     memset(&pref, 0, sizeof pref);
+    pref.compressionLevel = compressionLevel;
     pref.frameInfo.blockSizeID = LZ4F_max256KB;
     pref.frameInfo.contentChecksumFlag = writeChecksum;
 

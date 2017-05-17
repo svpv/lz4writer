@@ -14,7 +14,7 @@ static void error(const char *func, const char *err[2])
 	fprintf(stderr, PROG ": %s: %s: %s\n", func, err[0], err[1]);
 }
 
-int main()
+int main(int argc, char **argv)
 {
     if (isatty(1)) {
 	fprintf(stderr, PROG ": compressed data cannot be written to a terminal\n");
@@ -23,10 +23,17 @@ int main()
     if (isatty(0))
 	fprintf(stderr, PROG ": reading input from a terminal\n");
 
+    int compressionLevel = 1;
+    if (argc > 1) {
+	const char *opt = argv[1];
+	if (opt[0] == '-' && opt[1] >= '0' && opt[1] <= '9')
+	    compressionLevel = atoi(&opt[1]);
+    }
+
     bool writeContentSize = lseek(1, 0, SEEK_CUR) != (off_t) -1;
     bool writeChecksum = false;
     const char *err[2];
-    struct lz4writer *zw = lz4writer_fdopen(1, writeContentSize, writeChecksum, err);
+    struct lz4writer *zw = lz4writer_fdopen(1, compressionLevel, writeContentSize, writeChecksum, err);
     if (!zw)
 	return error("lz4writer_fdopen", err), 1;
 

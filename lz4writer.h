@@ -27,7 +27,8 @@ extern "C" {
 #include <stdbool.h>
 #endif
 
-struct lz4writer *lz4writer_fdopen(int fd, bool writeContentSize, bool writeChecksum, const char *err[2]) __attribute__((nonnull));
+struct lz4writer *lz4writer_fdopen(int fd, int compressionLevel, bool writeContentSize, bool writeChecksum,
+				   const char *err[2]) __attribute__((nonnull));
 bool lz4writer_write(struct lz4writer *zw, const void *buf, size_t size, const char *err[2]) __attribute__((nonnull));
 bool lz4writer_close(struct lz4writer *zw, const char *err[2]) __attribute__((nonnull));
 
