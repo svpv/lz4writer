@@ -144,6 +144,8 @@ bool lz4writer_write(struct lz4writer *zw, const void *buf, size_t size, const c
     if (zw->error)
 	return ERRSTR("previous write failed"), false;
 
+    zw->contentSize += size;
+
     while (size) {
 	size_t chunk = size < CHUNK ? size : CHUNK;
 	size_t zsize = LZ4F_compressUpdate(zw->zctx, zw->zbuf, zw->zbufSize, buf, chunk, NULL);
